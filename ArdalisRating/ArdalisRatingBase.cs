@@ -10,8 +10,8 @@ namespace ArdalisRating
 
         public ArdalisRatingBase()
         {
-            policyJson = new FilePolicySource().GetPolicyJson();
-            logger = new Logger();
+            this.logger = new Logger();
+            this.policyJson = new FilePolicySource().GetPolicyJson();
         }
 
         public void Logger(string message)
@@ -21,6 +21,11 @@ namespace ArdalisRating
         public string GetPolicyJson()
         {
             return policyJson;
+        }
+
+        public Policy GetPolicy(string policyJson)
+        {
+            return new JsonDeserializer(policyJson).GetPolicy();
         }
     }
 }
