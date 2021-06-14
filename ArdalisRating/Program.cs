@@ -4,8 +4,16 @@ namespace ArdalisRating
 {
     class Program
     {
+        private Logger logger;
+
+        public Program()
+        {
+            logger = new Logger();
+        }
+
         static void Main(string[] args)
         {
+
             Console.WriteLine("Ardalis Insurance Rating System Starting...");
 
             var engine = new RatingEngine();
@@ -21,5 +29,7 @@ namespace ArdalisRating
             }
 
         }
+
+        
     }
 }
