@@ -21,8 +21,8 @@ namespace ArdalisRating
             string policyJson = GetPolicyJson();
             Policy policy = GetPolicy(policyJson);
 
-            var rater = new RatingFactory().Create(policy, this);
-            rater.Rate(policy);
+            var rater = new RaterFactory().Create(policy, this);
+            rater?.Rate(policy);
             
             
 
