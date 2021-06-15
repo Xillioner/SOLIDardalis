@@ -4,19 +4,29 @@ using System;
 
 namespace ArdalisRating
 {
-    internal class JsonDeserializer
+    internal class JsonDeserializer:ArdalisRatingBase
     {
         private string policyJson;
+        private Policy policy;
 
         public JsonDeserializer(string policyJson)
         {
             this.policyJson = policyJson;
+            policy = new Policy();
         }
 
         public Policy GetPolicy()
         {
-            return JsonConvert.DeserializeObject<Policy>(policyJson,
-                new StringEnumConverter());
+            try
+            {
+                return JsonConvert.DeserializeObject<Policy>(policyJson,
+                    new StringEnumConverter());
+            }
+            catch
+            {
+                policy.Type = PolicyType.Unknown;
+                return policy;
+            }
         }
     }
 }

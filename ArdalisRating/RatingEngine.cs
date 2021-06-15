@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ardalis.GuardClauses;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.IO;
@@ -23,11 +24,9 @@ namespace ArdalisRating
 
             var rater = new RaterFactory().Create(policy, this);
             rater?.Rate(policy);
-            
-            
-
             Logger("Rating completed.");
         }
 
+        
     }
 }

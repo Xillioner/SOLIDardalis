@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 
 namespace ArdalisRating
 {
@@ -27,9 +28,7 @@ namespace ArdalisRating
             {
                 Console.WriteLine("No rating produced.");
             }
-
         }
-
         
     }
 }

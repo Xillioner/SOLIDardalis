@@ -6,6 +6,7 @@ namespace ArdalisRating
     public class Policy
     {
         public PolicyType Type { get; set; }
+
         #region Life Insurance
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -26,8 +27,10 @@ namespace ArdalisRating
         public int Year { get; set; }
         public int Miles { get; set; }
         public decimal Deductible { get; set; }
-        public decimal EvaluationAboveSeaLevelFeet { get; internal set; }
         #endregion
 
+        #region Flood
+        public decimal EvaluationAboveSeaLevelFeet { get; internal set; }
+        #endregion
     }
 }
