@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArdalisRating.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,30 +7,28 @@ using System.Threading.Tasks;
 
 namespace ArdalisRating
 {
-    class LandPolicyRater : Rater
+    class LandPolicyRater : RaterBase
     {
-        private RatingEngine engine;
 
-        public LandPolicyRater(RatingEngine engine) : base(engine)
+        public LandPolicyRater(ILogger logger) : base(logger)
         {
-            this.engine = engine;
         }
 
-        public override void Rate(Policy policy)
+        public override decimal Rate(Policy policy)
         {
-            Log("Rating LAND policy...");
-            Log("Validating policy.");
+            Logger.Log("Rating LAND policy...");
+            Logger.Log("Validating policy.");
             if (policy.BondAmount == 0 || policy.Valuation == 0)
             {
-                Log("Land policy must specify Bond Amount and Valuation.");
-                return;
+                Logger.Log("Land policy must specify Bond Amount and Valuation.");
+                return 0;
             }
             if (policy.BondAmount < 0.8m * policy.Valuation)
             {
-                Log("Insufficient bond amount.");
-                return;
+                Logger.Log("Insufficient bond amount.");
+                return 0;
             }
-            engine.Rating = policy.BondAmount * 0.05m;
+            return (policy.BondAmount * 0.05m);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArdalisRating.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,31 +7,30 @@ using System.Threading.Tasks;
 
 namespace ArdalisRating
 {
-    class AutoPolicyRater : Rater
+    class AutoPolicyRater : RaterBase
     {
-        private RatingEngine engine;
 
-        public AutoPolicyRater(RatingEngine engine):base(engine)
+        public AutoPolicyRater(ILogger logger):base(logger)
         {
-            this.engine = engine;
         }
-        public override void Rate(Policy policy)
+        public override decimal Rate(Policy policy)
         {
-            Log("Rating AUTO policy...");
-            Log("Validating policy.");
+            Logger.Log("Rating AUTO policy...");
+            Logger.Log("Validating policy.");
             if (String.IsNullOrEmpty(policy.Make))
             {
-                Log("Auto policy must specify Make");
-                return;
+                Logger.Log ("Auto policy must specify Make");
+                return 0m;
             }
             if (policy.Make == "BMW")
             {
                 if (policy.Deductible < 500)
                 {
-                    engine.Rating = 1000m;
+                    return 1000m;
                 }
-                engine.Rating = 900m;
+                return 900m;
             }
+            return 0m;
         }
     }
 }

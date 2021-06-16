@@ -1,37 +1,41 @@
-﻿using System;
+﻿using ArdalisRating.Interfaces;
+using System;
 
 namespace ArdalisRating
 {
-    internal class RaterFactory
+    public class RaterFactory
     {
-        public RaterFactory()
+        public ILogger Logger { get; set; }
+
+        public RaterFactory(ILogger logger)
         {
+            this.Logger = logger;
         }
 
-        public Rater Create(Policy policy, RatingEngine engine)
+        public RaterBase Create(Policy policy,IRatingContext context)
         {
             try
             {
-                return (Rater)Activator.CreateInstance(Type.GetType($"ArdalisRating.{policy.Type}PolicyRater"), new object[] { engine });
+                return (RaterBase)Activator.CreateInstance(Type.GetType($"ArdalisRating.{policy.Type}PolicyRater"), new object[] { Logger });
             }
             catch (Exception)
             {
-                return new UnknownPolicyRater(engine);
+                return new UnknownPolicyRater(Logger);
             }
 
             //switch (policy.Type)
             //{
             //    case PolicyType.Life:
-            //        return new LifePolicyRater(engine);
+            //        return new LifePolicyRater(ratingUpdater);
 
             //    case PolicyType.Land:
-            //        return new LandPolicyRater(engine);
+            //        return new LandPolicyRater(ratingUpdater);
             //    case PolicyType.Auto:
-            //        return new AutoPolicyRater(engine);
+            //        return new AutoPolicyRater(ratingUpdater);
             //    case PolicyType.Flood:
-            //        return new FloodPolicyRater(engine);
+            //        return new FloodPolicyRater(ratingUpdater);
             //    default:
-            //        return new UnknownPolicyRater(engine);
+            //        return new UnknownPolicyRater(ratingUpdater);
             //}
 
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArdalisRating.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,33 +7,31 @@ using System.Threading.Tasks;
 
 namespace ArdalisRating
 {
-    class LifePolicyRater : Rater
+    class LifePolicyRater : RaterBase
     {
-        private RatingEngine engine;
 
-        public LifePolicyRater(RatingEngine engine):base(engine)
+        public LifePolicyRater(ILogger logger):base(logger)
         {
-            this.engine = engine;
         }
 
-        public override void Rate(Policy policy)
+        public override decimal Rate(Policy policy)
         {
-            Log("Rating LIFE policy...");
-            Log("Validating policy.");
+            Logger.Log("Rating LIFE policy...");
+            Logger.Log("Validating policy.");
             if (policy.DateOfBirth == DateTime.MinValue)
             {
-                Log("Life policy must include Date of Birth.");
-                return;
+                Logger.Log("Life policy must include Date of Birth.");
+                return 0;
             }
             if (policy.DateOfBirth < DateTime.Today.AddYears(-100))
             {
-                Log("Centenarians are not eligible for coverage.");
-                return;
+                Logger.Log("Centenarians are not eligible for coverage.");
+                return 0;
             }
             if (policy.Amount == 0)
             {
-                Log("Life policy must include an Amount.");
-                return;
+                Logger.Log("Life policy must include an Amount.");
+                return 0;
             }
             int age = DateTime.Today.Year - policy.DateOfBirth.Year;
             if (policy.DateOfBirth.Month == DateTime.Today.Month &&
@@ -44,12 +43,12 @@ namespace ArdalisRating
             decimal baseRate = policy.Amount * age / 200;
             if (policy.IsSmoker)
             {
-                engine.Rating = baseRate * 2;
+                return (baseRate * 2);
 
             }
             else
             {
-                engine.Rating = baseRate;
+                return (baseRate);
             }
         }
     }

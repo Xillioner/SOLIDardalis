@@ -6,18 +6,12 @@ namespace ArdalisRating
     public abstract class ArdalisRatingBase
     {
         private string policyJson;
-        private Logger logger;
 
         public ArdalisRatingBase()
         {
-            this.logger = new Logger();
             this.policyJson = new FilePolicySource().GetPolicyJson();
         }
 
-        public void Logger(string message)
-        {
-            logger.Log(message);
-        }
         public string GetPolicyJson()
         {
             return policyJson;

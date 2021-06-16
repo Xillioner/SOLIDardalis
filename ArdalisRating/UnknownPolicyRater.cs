@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArdalisRating.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace ArdalisRating
 {
-    public class UnknownPolicyRater : Rater
+    public class UnknownPolicyRater : RaterBase
     {
-        private RatingEngine engine;
 
-        public UnknownPolicyRater(RatingEngine engine) : base(engine)
+        public UnknownPolicyRater(ILogger logger) : base(logger)
         {
-            this.engine = engine;
         }
-        public override void Rate(Policy policy)
+        public override decimal Rate(Policy policy)
         {
-            Log("Unknown policy type");
+            Logger.Log("Unknown policy type");
+            return 0m;
         }
     }
 }

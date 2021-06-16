@@ -5,19 +5,15 @@ namespace ArdalisRating
 {
     class Program
     {
-        private Logger logger;
+        
 
-        public Program()
-        {
-            logger = new Logger();
-        }
-
+        
         static void Main(string[] args)
         {
 
             Console.WriteLine("Ardalis Insurance Rating System Starting...");
-
-            var engine = new RatingEngine();
+            var logger = new ConsoleLogger();
+            var engine = new RatingEngine(logger,new FilePolicySource(),new JsonPolicySerializer(),new RaterFactory(logger));
             engine.Rate();
 
             if (engine.Rating > 0)

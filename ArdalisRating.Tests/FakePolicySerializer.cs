@@ -1,31 +1,32 @@
-﻿using Newtonsoft.Json;
+﻿using ArdalisRating.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 
-namespace ArdalisRating
+namespace ArdalisRating.Tests
 {
-    internal class JsonDeserializer:ArdalisRatingBase
+    internal class FakePolicySerializer:IPolicySerializer
     {
-        private string policyJson;
-        private Policy policy;
+        private readonly Policy policy;
 
-        public JsonDeserializer(string policyJson)
+        public FakePolicySerializer()
         {
-            this.policyJson = policyJson;
-            policy = new Policy();
+            this.policy = new Policy();
+
         }
 
-        public Policy GetPolicy()
+        public Policy GetPolicyFromString(string policyJson)
         {
             try
             {
                 return JsonConvert.DeserializeObject<Policy>(policyJson,
                     new StringEnumConverter());
             }
-            catch
+            catch (Exception)
             {
                 policy.Type = PolicyType.Unknown;
                 return policy;
+
             }
         }
     }
